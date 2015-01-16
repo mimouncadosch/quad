@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Command Center</title>
+</head>
+<body>
+
+Throttle
+<a href="{{ url_for('throttle', step=1) }}">Up</a>
+<a href="{{ url_for('throttle', step=-1) }}">Down</a>
+
+Yaw
+<a href="{{ url_for('yaw', step=1) }}">Right</a>
+<a href="{{ url_for('yaw', step=-1) }}">Left</a>
+
+Pitch
+<a href="{{ url_for('pitch', step=1) }}">Fwd</a>
+<a href="{{ url_for('pitch', step=-1) }}">Bkwd</a>
+
+Roll
+<a href="{{ url_for('roll', step=1) }}">Right</a>
+<a href="{{ url_for('roll', step=-1) }}">Left</a>
+
+SAFETY STOP
+<a href="{{ url_for('safetystop') }}">STOP</a>
+
+Close serial Port
+<a href="{{ url_for('closeserial') }}">STOP</a>
+<ul>
+{% for key in motorVals|dictsort %}
+	<li><b>{{key}}:</b> {{motorVals[key]}}</li>
+{% endfor %}
+</ul>
+
+Yaw Pitch Roll
+<ul>
+	
+</ul>
+<script type="text/javascript">
+	function httpGet(theUrl)
+	{
+		console.log('calling httpGet');
+	    var xmlHttp = null;
+
+	    xmlHttp = new XMLHttpRequest();
+	    xmlHttp.open( "GET", theUrl, false );
+	    xmlHttp.send( null );
+	    return xmlHttp.responseText;
+	}
+
+	function timeout() {
+	    setTimeout(function () {
+	        console.log('updating vals');
+	        httpGet('serialcom')
+	        timeout();
+	    }, 1000);
+	}
+	
+	timeout();
+
+</script>
+</body>
+</html>
